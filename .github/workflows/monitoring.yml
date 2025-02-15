@@ -20,8 +20,8 @@ jobs:
 
       - name: Set up Kubernetes and Helm providers
         run: |
-          echo "${{ secrets.KUBECONFIG }}" > monitoring/kubeconfig.yaml
-          echo "KUBECONFIG=monitoring/kubeconfig.yaml" >> $GITHUB_ENV
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/kubeconfig.yaml
+          echo "KUBECONFIG=$HOME/kubeconfig.yaml" >> $GITHUB_ENV
 
       - name: Terraform Init
         run: |
@@ -29,11 +29,15 @@ jobs:
           terraform init
 
       - name: Terraform Plan
+        env:
+          TF_VAR_kubeconfig_path: $HOME/kubeconfig.yaml  # Pass kubeconfig path to Terraform
         run: |
           cd monitoring
           terraform plan
 
       - name: Terraform Apply
+        env:
+          TF_VAR_kubeconfig_path: $HOME/kubeconfig.yaml
         run: |
           cd monitoring
           terraform apply -auto-approve
