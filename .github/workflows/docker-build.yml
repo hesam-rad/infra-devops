@@ -10,16 +10,6 @@ jobs:
   build:
     name: Build Image
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dockerfile:
-          - 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2'
-          - 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2-maven4.0.0'
-        include:
-          - dockerfile: 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2'
-            tag: 'jdk17-alp3.21.2'
-          - dockerfile: 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2-maven4.0.0'
-            tag: 'jdk17-alp3.21.2-mvn4'
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -41,23 +31,28 @@ jobs:
           if git rev-parse --verify HEAD^ > /dev/null 2>&1; then
             CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           else
-            # If no previous commit, assume all files are changed
             CHANGED_FILES=$(git ls-tree -r HEAD --name-only)
           fi
 
-          if echo "$CHANGED_FILES" | grep -q "${{ matrix.dockerfile }}"; then
-            echo "::set-output name=changed::true"
-          else
-            echo "::set-output name=changed::false"
-          fi
+          CHANGED_DOCKERFILES=$(echo "$CHANGED_FILES" | grep '^base-dockerfiles/Dockerfile')
 
-      - name: Build and Push Docker Image
-        if: steps.changed-files.outputs.changed == 'true'
+          # Convert the list of changed Dockerfiles to a JSON array
+          echo "::set-output name=changed_dockerfiles::$(echo "$CHANGED_DOCKERFILES" | jq -R -s -c 'split("\n")[:-1]')'
+
+      - name: Build and Push Changed Docker Images
+        if: ${{ fromJson(steps.changed-files.outputs.changed_dockerfiles) != '[]' }}
         run: |
-          docker buildx build \
-            --file ${{ matrix.dockerfile }} \
-            --tag hesamrad/crew:${{ matrix.tag }} \
-            --push \
-            --cache-from type=registry,ref=hesamrad/crew:${{ matrix.tag }} \
-            --cache-to type=inline \
-            .
+          # Loop through each changed Dockerfile
+          for DOCKERFILE in ${{ fromJson(steps.changed-files.outputs.changed_dockerfiles) }}; do
+            # Extract the tag from the Dockerfile name
+            TAG=$(basename "$DOCKERFILE" | sed 's/Dockerfile\.//')
+
+            echo "Building and pushing image for $DOCKERFILE with tag $TAG"
+            docker buildx build \
+              --file "$DOCKERFILE" \
+              --tag hesamrad/crew:$TAG \
+              --push \
+              --cache-from type=registry,ref=hesamrad/crew:$TAG \
+              --cache-to type=inline \
+              .
+          done
