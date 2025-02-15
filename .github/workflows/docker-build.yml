@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'base-dockerfiles/**'
-      
+
 jobs:
   build:
     name: Build Image
@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2 
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -36,8 +38,18 @@ jobs:
       - name: Detect changed Dockerfiles
         id: changed-files
         run: |
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
-          echo "::set-output name=changed::$(echo "$CHANGED_FILES" | grep -q "${{ matrix.dockerfile }}" && echo 'true' || echo 'false')"
+          if git rev-parse --verify HEAD^ > /dev/null 2>&1; then
+            CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          else
+            # If no previous commit, assume all files are changed
+            CHANGED_FILES=$(git ls-tree -r HEAD --name-only)
+          fi
+
+          if echo "$CHANGED_FILES" | grep -q "${{ matrix.dockerfile }}"; then
+            echo "::set-output name=changed::true"
+          else
+            echo "::set-output name=changed::false"
+          fi
 
       - name: Build and Push Docker Image
         if: steps.changed-files.outputs.changed == 'true'
