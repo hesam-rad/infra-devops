@@ -1,0 +1,9 @@
+grafana:
+  adminUser: admin
+  adminPassword: b2c8ec0364eaae9375f1dd2e
+
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.hesambodaqirad.ir
+    path: /

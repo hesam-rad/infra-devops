@@ -1,0 +1,17 @@
+FROM alpine:3.21.2 AS base
+
+# Install Requirement Packages
+RUN apk update \
+    && apk add --no-cache \
+    openjdk17
+
+# Create Non ROOT User
+ENV UID=1000
+ENV GID=1000
+RUN addgroup -S $GID && \
+    adduser -S $UID -G $GID
+USER $UID
+
+
+
+    
