@@ -1,4 +1,5 @@
 name: Deploy Monitoring with Terraform
+
 on:
   push:
     branches: [ main ]
@@ -16,12 +17,12 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.0 
+          terraform_version: 1.5.0  
 
       - name: Set up Kubernetes and Helm providers
         run: |
-          echo "${{ secrets.KUBECONFIG }}" > $HOME/kubeconfig.yaml
-          echo "KUBECONFIG=$HOME/kubeconfig.yaml" >> $GITHUB_ENV
+          echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
+          echo "KUBECONFIG=kubeconfig.yaml" >> $GITHUB_ENV
 
       - name: Terraform Init
         run: |
@@ -29,15 +30,11 @@ jobs:
           terraform init
 
       - name: Terraform Plan
-        env:
-          TF_VAR_kubeconfig_path: $HOME/kubeconfig.yaml  # Pass kubeconfig path to Terraform
         run: |
           cd monitoring
           terraform plan
 
       - name: Terraform Apply
-        env:
-          TF_VAR_kubeconfig_path: $HOME/kubeconfig.yaml
         run: |
           cd monitoring
           terraform apply -auto-approve
