@@ -9,6 +9,11 @@ terraform {
 
 provider "helm" {
   kubernetes = {
-    config_path = "./kubeconfig.yaml"
+    config_path = pathexpand(var.kubeconfig_path)
+
   }
+}
+
+variable "kubeconfig_path" {
+  default = ""
 }
