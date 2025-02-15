@@ -4,9 +4,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2'
-      - 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2-maven4.0.0'
-
+      - 'base-dockerfiles/**'
+      
 jobs:
   build:
     name: Build Image
