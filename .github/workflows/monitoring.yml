@@ -21,8 +21,8 @@ jobs:
 
       - name: Set up Kubernetes and Helm providers
         run: |
-          echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
-          echo "KUBECONFIG=kubeconfig.yaml" >> $GITHUB_ENV
+          echo "${{ secrets.KUBECONFIG }}" > monitoring/kubeconfig.yaml
+          echo "KUBECONFIG=monitoring/kubeconfig.yaml" >> $GITHUB_ENV
 
       - name: Terraform Init
         run: |
