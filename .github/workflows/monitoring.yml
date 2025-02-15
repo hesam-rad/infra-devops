@@ -1,0 +1,39 @@
+name: Deploy Monitoring with Terraform
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'monitoring/**'
+
+jobs:
+  deploy-monitoring:
+    name: Deploy Monitoring
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0 
+
+      - name: Set up Kubernetes and Helm providers
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" > monitoring/kubeconfig.yaml
+          echo "KUBECONFIG=monitoring/kubeconfig.yaml" >> $GITHUB_ENV
+
+      - name: Terraform Init
+        run: |
+          cd monitoring
+          terraform init
+
+      - name: Terraform Plan
+        run: |
+          cd monitoring
+          terraform plan
+
+      - name: Terraform Apply
+        run: |
+          cd monitoring
+          terraform apply -auto-approve
