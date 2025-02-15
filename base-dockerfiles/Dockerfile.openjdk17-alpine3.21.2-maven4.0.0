@@ -6,7 +6,7 @@ RUN apk update \
     openjdk17
 
 # I put these ENVs for cache the priovious change
-ENV MAVEN_VERSION=4.0.0-rc-2
+ENV MAVEN_VERSION=4.0.0-rc-1
 ENV MAVEN_HOME=/usr/lib/mvn
 ENV PATH=$MAVEN_HOME/bin:$PATH
 
