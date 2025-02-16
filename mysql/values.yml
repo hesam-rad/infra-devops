@@ -1,4 +1,5 @@
 auth:
+  # if you need them, recomment them :)
   # rootPassword: ""
   # database: ""
   # createDatabase: true

@@ -1,4 +1,4 @@
-name: Deploy Mysql
+name: Deploy Mysql with Terraform
 
 on:
   push:
