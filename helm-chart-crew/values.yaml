@@ -33,7 +33,6 @@ service:
   port: 8080
   type: NodePort
   targetPort: 8080
-  nodePort: 30100
   name: web
 
 ingress:
