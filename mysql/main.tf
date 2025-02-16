@@ -1,11 +1,13 @@
+# MySQL 
 resource "helm_release" "mysql" {
   name             = "mysql"
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = "mysql"
-  namespace        = "default"
+  namespace        = "database"
   create_namespace = true
-  atomic           = true    
-  timeout          = 500     
   version          = "10.0.0"
+  atomic           = "true"    
+  timeout          = 500     
+  values           = [file("values.yml")]
 }
 
