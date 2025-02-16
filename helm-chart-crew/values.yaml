@@ -92,7 +92,7 @@ envFrom: []
   # - secretRef:
   #     name: app-secret
 
-# Monitoring 
+# Monitoring Prometheus
 prometheus:
   enabled: false
 #  metric_path: /actuator/prometheus
