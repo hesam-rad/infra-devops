@@ -1,5 +1,5 @@
 apiVersion: v2
-name: crew
+name: helm-chart-crew
 description: Helm Chart Test for Crewmeister company
 
 # A chart can be either an 'application' or a 'library' chart.
