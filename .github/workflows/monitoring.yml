@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "${{ secrets.KUBECONFIG }}" > monitoring/kubeconfig.yaml
           echo "KUBECONFIG=monitoring/kubeconfig.yaml" >> $GITHUB_ENV
-          cat monitoring/kubeconfig.yaml
+          
       - name: Terraform Init
         run: |
           cd monitoring
