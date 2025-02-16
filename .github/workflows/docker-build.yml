@@ -13,12 +13,12 @@ jobs:
       matrix:
         dockerfile:
           - 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2'
-          - 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2-maven4.0.0'
+          - 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2-maven3.8.4'
         include:
           - dockerfile: 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2'
             tag: 'jdk17-alp3.21.2'
-          - dockerfile: 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2-maven4.0.0'
-            tag: 'jdk17-alp3.21.2-mvn4'
+          - dockerfile: 'base-dockerfiles/Dockerfile.openjdk17-alpine3.21.2-maven3.8.4'
+            tag: 'jdk17-alp3.21.2-mvn3.8.4'
     steps:
       - name: Check out code
         uses: actions/checkout@v3
