@@ -1,0 +1,18 @@
+{{- if .Values.prometheus.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "crew.fullname" . }}
+  labels:
+    release: {{ .Values.prometheus.releaseName }}
+spec:
+  jobLabel: job
+  namespaceSelector:
+    any: true
+  endpoints:
+  - port: {{ .port }}
+    path: {{ .Values.prometheus.metric_path }}
+  selector:
+    matchLabels:
+        {{- include "crew.labels" . | nindent 6 }}
+{{- end -}}
