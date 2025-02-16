@@ -57,7 +57,7 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-# Probes
+# Probes 
 livenessProbe:
   httpGet:
     path: /
@@ -92,6 +92,7 @@ envFrom: []
   # - secretRef:
   #     name: app-secret
 
+# Monitoring 
 prometheus:
   enabled: false
 #  metric_path: /actuator/prometheus
