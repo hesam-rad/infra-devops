@@ -1,4 +1,15 @@
-auth:
+primary:
+  persistence:
+    enabled: false
+    existingClaim: ""
+    subPath: ""
+    storageClass: ""
+    annotations: {}
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
+
+#auth:
   # if you need them, recomment them :)
   # rootPassword: ""
   # database: ""

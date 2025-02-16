@@ -7,7 +7,7 @@ resource "helm_release" "mysql" {
   create_namespace = true
   version          = "10.0.0"
   atomic           = "true"    
-  timeout          = 500     
+  timeout          = "500"
   values           = [file("values.yml")]
 }
 
