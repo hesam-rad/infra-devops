@@ -6,7 +6,7 @@ terraform {
     }
   }
 }
-# test
+# test 1
 provider "helm" {
   kubernetes = {
     config_path = "kubeconfig.yaml"  
