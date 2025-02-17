@@ -72,7 +72,7 @@ This [`repository`](https://github.com/hesam-rad/devops-coding-challenge) contai
 
 
 **Note:**
-In my Kubernetes deployments, I manually create secrets like crew-app-secret 🔐. However, for production environments, I understand the importance of using secure secret management tools such as HashiCorp Vault 🗝️, AWS Secrets Manager ☁️, and Azure Key Vault 🔒. I am also familiar with integrating these tools with Kubernetes using providers like Kubernetes External Secrets for secure and seamless secret management 🔒.
+In my Kubernetes deployments, I manually create secrets like `crew-app-secret` 🔐. However, for production environments, I understand the importance of using secure secret management tools such as HashiCorp Vault 🗝️, AWS Secrets Manager ☁️, and Azure Key Vault 🔒. I am also familiar with integrating these tools with Kubernetes using providers like Kubernetes External Secrets for secure and seamless secret management 🔒.
 
 
 ---
