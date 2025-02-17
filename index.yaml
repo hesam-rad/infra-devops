@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  helm-chart-crew:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-02-17T11:57:31.358750962Z"
+    description: Helm Chart Test for Crewmeister company
+    digest: b94504100e1d7985469e9d1039b30d6ff3799a50ec4935a153be5e6154636736
+    name: helm-chart-crew
+    type: application
+    urls:
+    - helm-chart-crew-0.0.2.tgz
+    version: 0.0.2
+generated: "2025-02-17T11:57:31.358178935Z"
