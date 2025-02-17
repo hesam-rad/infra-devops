@@ -44,6 +44,14 @@ spec:
           envFrom:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+            {{- range $key, $value := .Values.config }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "crew.fullname" $ }}-config
+                  key: {{ $key }}
+            {{- end }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

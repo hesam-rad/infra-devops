@@ -87,9 +87,19 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 
+## Secret file
 envFrom: []
   # - secretRef:
   #     name: app-secret
+
+
+## Configmap key values
+config:
+#   APP_ENV: "production"
+#   LOG_LEVEL: "info"
+
+
+
 
 # Monitoring Prometheus
 prometheus:
